@@ -111,8 +111,7 @@ def read_mw():
         else:
             ausgabe_feuchte.config(fg="green")
         ausgabe_feuchte["text"] = Feuchte + " % rel."
-        fenster.update_idletasks()
-        fenster.after(Is)
+        fenster.after(Is,fenster.update_idletasks())
 
 def start():
     start_new_thread(read_mw())
