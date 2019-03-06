@@ -42,6 +42,10 @@ def read_mw():
     Is = Is*1000
     print (Ds,Is,DF)
 
+    # Knöpfe ausblenden
+    los.grid_forget()
+    ende.grid_forget()
+
     # Datum bestimmen
     Datum = time.strftime("%a, %d %b %Y")
 
@@ -90,11 +94,8 @@ def read_mw():
             d.write(Zeit + ";" + Temp + ";"+ Feuchte+ "\n")
             # und schließen
             d.close()
-
-        # Intervall abwarten
-        #time.sleep(Is)
-        #fenster.after(Is)
-        #ausgabe_2.after(Is)
+        # Ausgabe der Messwerte im Fenster vorbereiten
+        # anhängig vom Wert -> verschiedene Farben
         ausgabe_uhr.config(fg= "blue")
         ausgabe_uhr["text"] = Zeit + " Uhr"
         print (int(Temp[0:3]))
@@ -111,10 +112,12 @@ def read_mw():
         else:
             ausgabe_feuchte.config(fg="green")
         ausgabe_feuchte["text"] = Feuchte + " % rel."
+        # update Anzeige und Intervall abwarten
         fenster.after(Is,fenster.update_idletasks())
 
-def start():
-    start_new_thread(read_mw())
+    # und Knöpfe wieder sichtbar machen
+    los.grid(row=3, column=0, padx=50, pady=20)
+    ende.grid(row=3, column=1, padx=50, pady=20)
 
 def stop():
     fenster.destroy()
@@ -142,7 +145,7 @@ eingabe_2.grid(row=1, column=1, padx=10, pady=10)
 eingabe_3 = tkinter.Entry(fenster)
 eingabe_3.grid(row=2, column=1, padx=10, pady=10)
 
-los = tkinter.Button(fenster, text = "Start", command= start)
+los = tkinter.Button(fenster, text = "Start", command= read_mw)
 los.grid(row=3, column=0, padx=50, pady=20 )
 
 ausgabe = tkinter.Label(fenster, text = "aktuelle Messwerte:")
