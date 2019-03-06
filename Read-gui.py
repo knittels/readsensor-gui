@@ -97,7 +97,14 @@ def read_mw():
         #ausgabe_2.after(Is)
         ausgabe_uhr.config(fg= "blue")
         ausgabe_uhr["text"] = Zeit + " Uhr"
-        ausgabe_temp.config(fg= "blue")
+        print (int(Temp[0:3]))
+        if int(Temp[0:3])<20:
+            ausgabe_temp.config(fg="blue")
+        else:
+            if int(Temp[0:3])>25:
+                ausgabe_temp.config(fg="red")
+            else:
+                ausgabe_temp.config(fg= "green")
         ausgabe_temp["text"] = Temp + " °C"
         if int(Feuchte) < 35:
             ausgabe_feuchte.config(fg= "red")
